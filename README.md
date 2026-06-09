@@ -1,4 +1,4 @@
-# Career Tailor AI
+# Resume Builder AI
 
 A Cowork skill that tailors your resume and cover letter for any job description — without fabricating experience.
 
