@@ -1,0 +1,50 @@
+{
+  "skill_name": "career-tailor-ai",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to tailor my resume for this job posting. Here's the job description:\n\n---\nSenior Software Engineer — Backend, Stripe\nWe're looking for a backend engineer to join our Payments Infrastructure team. You'll design and scale distributed systems processing billions of transactions. Requirements: 5+ years backend experience, strong Python or Go, experience with PostgreSQL and Redis, familiarity with microservices and Kubernetes, strong system design skills. Nice to have: experience with financial systems, gRPC, Kafka.\n---\n\nAnd here's my master resume:\n\n# Alex Rivera\nalex.rivera@email.com | linkedin.com/in/alexrivera | github.com/alexrivera\n\n## Experience\n\n### Software Engineer II, Shopify\n*Jan 2022 – Present | Remote*\n- Built and maintained high-throughput order processing pipelines handling 500k+ daily transactions using Python and Django\n- Migrated legacy monolith components to microservices, reducing deployment time by 60%\n- Optimized PostgreSQL queries and added Redis caching layer, improving API response time from 800ms to 120ms\n- Led on-call rotation for payments checkout team, resolving 95% of incidents within SLA\n\n### Software Engineer, Brex\n*Jun 2019 – Dec 2021 | San Francisco, CA*\n- Developed RESTful APIs for card transaction processing in Python/FastAPI\n- Designed schema migrations and indexing strategy for PostgreSQL database with 50M+ rows\n- Collaborated with data team to build real-time fraud detection pipeline using Apache Kafka\n- Wrote comprehensive integration test suite, increasing coverage from 45% to 82%\n\n## Skills\n**Languages:** Python, JavaScript, SQL, Bash\n**Frameworks:** Django, FastAPI, React\n**Infrastructure:** Docker, Kubernetes, AWS (EC2, S3, RDS)\n**Databases:** PostgreSQL, Redis, MongoDB\n**Tools:** Git, Kafka, Datadog, PagerDuty\n\n## Education\nB.S. Computer Science, UC San Diego, 2019\n\n## Projects\n### Open-Source Payment SDK\nBuilt a lightweight Python SDK for payment gateway integration (400+ GitHub stars). Supports Stripe, Braintree, and PayPal APIs.\n\nMy cover letter template:\n---\n[Full Name]\n[Email] | [Phone] | [LinkedIn]\n\n[Date]\n\nDear [Hiring Manager / Hiring Team],\n\nI'm excited to apply for the [Role] position at [Company]. [Opening hook about company/product/mission].\n\n[Body paragraph 1: Connect your most relevant experience to a core requirement]\n\n[Body paragraph 2: Second specific connection, ideally with a metric or concrete result]\n\n[Closing: enthusiasm, availability, next steps]\n\nBest regards,\n[Full Name]\n---\n\nCompany: Stripe\nNo hiring manager name.",
+      "expected_output": "A tailored resume PDF and cover letter PDF for the Stripe Senior SWE role, plus an ATS analysis report. The resume should reorder experience to emphasize distributed systems and payments work, surface Kafka and Kubernetes experience, and achieve 80-85 ATS score. Must not invent Go experience since it's not in the resume.",
+      "files": [],
+      "expectations": [
+        "The ATS report includes a numeric score between 75 and 90",
+        "The resume PDF file is created in the outputs directory",
+        "The cover letter PDF file is created in the outputs directory",
+        "The resume does not claim Go experience (not present in master resume)",
+        "The resume highlights Kafka, PostgreSQL, Redis, Kubernetes, and microservices experience",
+        "The cover letter mentions Stripe specifically and connects to payments infrastructure",
+        "The ATS report lists missing keywords or gaps honestly"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can you tailor my resume for this UX Designer role? Here's the JD:\n\n---\nSenior UX Designer, Airbnb\nJoin our Hosting Experience team. You'll own end-to-end design for host onboarding flows. Requirements: 4+ years UX design experience, strong Figma skills, user research experience, ability to work cross-functionally with PM and engineering. Nice to have: experience in marketplace or travel, motion design, design systems.\n---\n\nMy resume:\n# Jordan Kim\njordan.kim@gmail.com | (415) 555-0182 | linkedin.com/in/jordankim\n\n## Experience\n\n### UX Designer, Lyft\n*Mar 2021 – Present | San Francisco, CA*\n- Redesigned driver onboarding flow in Figma, reducing drop-off rate by 28% across 3 onboarding steps\n- Led 12 moderated user research sessions with drivers to identify friction points in earnings dashboard\n- Partnered with 4 engineering squads and 3 PMs to ship 6 major features in 2023\n- Built and maintained 40+ component design system used across Driver and Rider apps\n\n### Product Designer, Eventbrite\n*Aug 2018 – Feb 2021 | San Francisco, CA*\n- Designed end-to-end event creation wizard for organizers, increasing event publish rate by 18%\n- Conducted competitive analysis and tree testing for global navigation redesign\n- Created high-fidelity prototypes in Figma for A/B testing; collaborated with data team on analysis\n- Mentored 2 junior designers on UX research methods and design critique process\n\n## Skills\n**Design Tools:** Figma, Sketch, Adobe XD, Principle (motion), InVision\n**Research Methods:** Usability testing, user interviews, card sorting, tree testing, survey design\n**Collaboration:** Jira, Notion, Miro, Zeplin\n**Specialties:** Design systems, mobile UX, onboarding flows, marketplace design\n\n## Education\nB.F.A. Interaction Design, California College of the Arts, 2018\n\n## Selected Projects\n### Driver Earnings Redesign (Lyft)\nResearched, designed, and shipped a full redesign of the earnings view. Reduced support tickets related to earnings confusion by 34%.\n\n### Event Discovery Redesign (Eventbrite)\nRe-architected search and browse experience. Shipped to 100% of users in Q3 2022.\n\nCover letter template:\n---\n[Name]\n[Contact]\n\n[Date]\n\nHi [Hiring Manager / Team],\n\n[Hook]\n\n[Body 1]\n\n[Body 2]\n\nLooking forward to connecting,\n[Name]\n---\n\nCompany: Airbnb. Hiring manager: Sarah Chen.",
+      "expected_output": "Tailored resume and cover letter PDFs for the Airbnb Senior UX Designer role. Resume should emphasize onboarding experience, design systems, Figma skills, user research, and cross-functional work. Cover letter addressed to Sarah Chen. ATS score 80-85.",
+      "files": [],
+      "expectations": [
+        "The ATS report includes a numeric score between 75 and 90",
+        "The resume PDF is created",
+        "The cover letter PDF is created",
+        "The cover letter is addressed to Sarah Chen",
+        "The resume highlights onboarding flow design experience (direct match to JD)",
+        "The resume surfaces marketplace design and design systems",
+        "No invented skills or experience not present in the original resume"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need to tailor my resume for this data analyst role. Here's the posting:\n\n---\nData Analyst, Notion\nWe're looking for a data analyst to support our Growth team. You'll analyze user activation funnels, build dashboards in Looker, write complex SQL queries, and partner with product managers. Requirements: 2+ years data analysis, strong SQL, experience with BI tools (Looker preferred), Python a plus, strong communication skills.\n---\n\nMy resume:\n# Priya Nair\npriya.nair@email.com | San Francisco, CA\n\n## Experience\n\n### Business Analyst, Salesforce\n*Jul 2023 – Present*\n- Wrote SQL queries to analyze CRM pipeline data for 5 enterprise accounts, surfacing $2M in at-risk ARR\n- Built executive dashboards in Tableau tracking renewal rates, churn, and NPS across 200+ accounts\n- Partnered with Customer Success PMs to define and measure onboarding health scores\n- Automated weekly reporting with Python scripts, saving 6 hours/week of manual work\n\n### Data & Operations Intern, Asana\n*Jun 2022 – Jun 2023*\n- Ran ad-hoc SQL analysis on product usage data to support quarterly OKR reviews\n- Built 3 self-serve Looker dashboards for Sales and Marketing teams\n- Maintained data quality checks for ETL pipelines in dbt\n\n## Skills\n**Analytics:** SQL (advanced), Python (pandas, matplotlib), R (basic)\n**BI Tools:** Tableau, Looker, Google Data Studio\n**Data Stack:** dbt, BigQuery, Snowflake\n**Other:** Excel, Google Sheets, Jira\n\n## Education\nB.S. Statistics, UC Berkeley, 2022\n\nCover letter template:\n---\n[Name] | [Email]\n\n[Date]\n\nDear [Hiring Team],\n\n[Opening]\n\n[Experience connection 1]\n\n[Experience connection 2]\n\n[Close]\n\nSincerely,\n[Name]\n---\n\nCompany: Notion. No hiring manager.",
+      "expected_output": "Tailored resume and cover letter PDFs for the Notion Data Analyst role. Resume should emphasize SQL, Looker, product analytics, and funnel analysis. Cover letter should mention Notion's product focus. ATS score 80-85.",
+      "files": [],
+      "expectations": [
+        "The ATS report includes a numeric score between 75 and 90",
+        "The resume PDF is created",
+        "The cover letter PDF is created",
+        "The resume highlights Looker experience (direct match to preferred requirement)",
+        "The resume surfaces SQL and Python experience prominently",
+        "The cover letter mentions Notion or growth/activation specifically",
+        "The ATS report identifies any gaps honestly (e.g., activation funnel experience may be indirect)"
+      ]
+    }
+  ]
+}
