@@ -1,4 +1,4 @@
-# Career Tailor AI
+# Resume Builder AI
 
 An AI-powered skill that tailors your resume and cover letter to any job posting — ATS-optimized, fully personalized, and built entirely from your real experience.
 
