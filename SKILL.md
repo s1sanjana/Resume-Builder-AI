@@ -115,36 +115,57 @@ Ask:
 - **If yes:** Store the JD now. Mark it as collected — Step 4 will be skipped automatically.
 - **If no:** Build a general resume optimized for the role/field from Step A.
 
-**D. Fill Resume Sections**
+**D. Fill Resume Sections — Deep Extraction**
 
-Show each section below one at a time. The user fills in their real information. Tell them to skip any section that doesn't apply — don't leave blanks, just move on.
+Go through each section one at a time. After the user gives their initial answer, ask targeted follow-up questions to pull out more real detail before moving to the next section. The goal is to get enough content to fill a full page — not by inventing anything, but by making sure the user hasn't left out real things they've done.
 
-```
-Let's build your resume section by section. Fill in what applies; skip what doesn't.
+**Education**
+Ask: degree, school, graduation year, GPA (if above 3.5). Then follow up:
+- "Any relevant courses you've completed? (e.g. databases, statistics, marketing, design)"
+- "Any academic awards, honours, or scholarships?"
+- "Did you complete any certifications or online courses? (e.g. Google, Coursera, AWS)"
 
-□ Professional Summary
-  (2–3 sentences describing who you are and what you bring)
+**Technical Skills**
+Ask them to list tools, languages, software, and platforms they know. Then follow up:
+- "Any tools you've used in school projects or personal projects, even briefly?"
+- "Any software you use regularly outside of work — like Notion, Figma, Canva, Excel?"
 
-□ Education
-  (Degree, school, graduation year, GPA if strong)
+**Work & Project Experience**
+For each role or project, ask: title, company/context, dates, and what they did. Then follow up per entry:
+- "What was the outcome or result — even a rough one?"
+- "Did you work with a team? How many people?"
+- "Did you use any specific tools or technologies for this?"
+- "Is there anything you built, launched, organized, or improved?"
 
-□ Technical Skills
-  (Languages, tools, software, platforms — list what you actually know)
+If they only have 1–2 entries, also ask:
+- "Any freelance work, side projects, or things you built on your own?"
+- "Any school assignments or case competitions that involved real work?"
 
-□ Work & Project Experience
-  (Job titles, company names, dates, 2–4 bullet points each)
+**Leadership & Extracurricular**
+Ask about clubs, volunteer roles, events, or executive positions. Then follow up:
+- "Did you organize anything — events, meetings, campaigns, fundraisers?"
+- "Did you mentor or train anyone?"
+- "Were you responsible for any specific outcomes (attendance, budget, social media, etc.)?"
 
-□ Leadership & Extracurricular
-  (Clubs, volunteer roles, executive positions, events organized)
-```
+**Extra Sections (ask if content is still sparse)**
+If after collecting the above the resume looks like it will be under a full page, ask about:
+- "Any volunteer work or community involvement?"
+- "Any languages you speak other than English?"
+- "Any publications, presentations, or research?"
+- "Any awards or recognition you've received?"
 
 **E. AI Writes the Resume**
 
-Once sections are filled, write the full resume:
-- Frame all experience using language appropriate for the role/field from Step A
-- If a JD was provided, weave in relevant keywords naturally
-- Keep every fact exactly as the user provided — no inflation, no additions
+Once all sections are collected, write the full resume:
+- Use every piece of real information the user provided — don't leave things out to keep it short
+- Write bullets in full, specific sentences — not fragments. One line per bullet is not enough; aim for 1.5–2 lines each
+- Frame language for the role/field from Step A
+- Weave in JD keywords naturally if a JD was provided
+- Include all sections that have content — a fuller resume is better than a half-page one
+- If the draft looks short, go back and ask one more targeted question rather than padding with vague filler
 - Format in clean markdown ready for PDF generation
+
+**Page fullness check:** After writing, estimate whether the content fills a full page. If it clearly won't (e.g. only 2 short bullet points per section), ask one more round of follow-up questions before finalizing. A half-page resume is not a finished output.
 
 ---
 
@@ -347,6 +368,64 @@ The script outputs:
 - `resume_<company>_<date>.pdf`
 - `cover_letter_<company>_<date>.pdf`
 
+### Resume Markdown Format (Required for Correct PDF Rendering)
+
+The PDF script parses specific markdown patterns to apply the correct formatting. Always write the resume markdown in this structure:
+
+**Name and contact (H1 + plain contact line):**
+```
+# Full Name
+email | phone | linkedin | city
+```
+
+**Section headers (H2):**
+```
+## Professional Summary
+## Education
+## Technical Skills
+## Project Experience
+## Leadership & Extracurricular
+## Work Experience
+```
+
+**Education and job/leadership entries — title on same line as italic date:**
+```
+School Name — Degree Title
+*Month Year – Month Year*
+
+### Job Title — Company Name
+*Month Year – Month Year*
+```
+
+**Project titles — name then pipe then tech stack (no date):**
+```
+### Project Name | Tool1, Tool2, Tool3
+```
+
+**Skills — bold label colon value (inside Technical Skills section only):**
+```
+**Languages:** Python, SQL, Java
+**Cloud & Infrastructure:** AWS, Terraform, Docker
+**Analytics:** Power BI, Tableau, Excel
+```
+
+**Bullets:**
+```
+- Bullet text here
+```
+
+### PDF Design (Applied Automatically)
+
+The script applies this design to every resume — no changes needed per person:
+
+- **Name:** centered, large, dark navy, bold caps
+- **Section headers:** blue bold ALL CAPS with a thin divider line below each
+- **Skills table:** two-column layout — blue bold label on the left, value text on the right
+- **Project titles:** bold project name + blue italic tech stack after the pipe
+- **Job/education titles:** bold text left-aligned, italic date right-aligned on the same line
+- **Bullets:** standard bullet points, consistent size
+- **Page:** enforced 1 page, auto-shrinks if content is long
+
 ---
 
 ## Final Deliverables
@@ -360,7 +439,7 @@ Then ask:
 
 > *"Want me to also prep you for interviews for this role? I can generate technical questions based on the JD, behavioral questions based on your real experience, and a list of strong questions to ask the interviewer — all tailored to this specific application."*
 
-If yes → run the Interview Prep subskill (see `subskills/interview-prep/SKILL.md`).
+If yes → run the Interview Prep subskill (see `subskills/interview-prep/interview-prep.md`).
 
 ---
 
