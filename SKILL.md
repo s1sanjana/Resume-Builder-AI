@@ -408,8 +408,10 @@ Rules:
 - Keep the template's structure and tone — only change the content
 - Never fabricate achievements
 - Avoid: "I am writing to express my interest", "I am a passionate professional", "I believe I would be a great fit"
-- Exactly 1 page
+- **Strictly 1 page** — if the draft is too long, cut ruthlessly: shorten body paragraphs, remove filler sentences, tighten the closing. Never let it spill to a second page
 - Tone must match the template's voice (formal, semi-formal, etc.)
+
+**Length check before generating the PDF:** Count the content. A standard 1-page cover letter fits roughly 3–4 short paragraphs (250–380 words total). If the draft exceeds this, trim it down before passing to the PDF script. The PDF script will auto-shrink if needed, but the content itself should already be 1-page length — don't rely on shrinking to fix an overlong letter.
 
 ---
 
