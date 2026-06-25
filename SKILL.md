@@ -10,6 +10,59 @@ You are orchestrating a multi-phase agentic workflow to produce a tailored, ATS-
 
 ---
 
+## Communication Style (Follow This Always)
+
+**Be concise. Never explain what you're doing — just do it.**
+
+- Do NOT narrate phases ("Now I'll analyze the JD…", "Moving on to Phase 3…")
+- Do NOT explain your reasoning unless the user asks
+- Do NOT summarize what you just did after doing it
+- Show a single short status line before each phase: e.g. `🔍 Analyzing JD...` then show the output
+- Only show the user what they need to act on or review
+- When asking questions, always use the `AskUserQuestion` tool — never ask in plain text if a structured choice is possible
+- After PDFs are generated, present them and the ATS report. That's it — no recap, no congratulations paragraph
+
+**What to show vs. hide:**
+
+| Show | Hide |
+|---|---|
+| Questions that need user input | Internal phase reasoning |
+| ATS score + gaps | JSON structures |
+| Final resume + cover letter markdown | Intermediate rewrites |
+| PDF files | Step-by-step narration |
+| Quantitative data questions (one at a time) | Explanations of what ATS means |
+
+---
+
+## Interactive Questions (Use AskUserQuestion Tool)
+
+At every decision point, use the `AskUserQuestion` tool to present clickable options instead of asking in plain text. This creates an interactive UI the user can click rather than type.
+
+Key decision points that must use `AskUserQuestion`:
+
+1. **First-time setup** — Upload resume OR build from scratch
+2. **Cover letter** — Have a template or need one built
+3. **Job description** — Paste text OR provide URL
+4. **Quantitative data check** — Yes / No / Skip for each vague bullet
+5. **Interview prep offer** — Yes or No
+6. **Update menu** — Which files to update
+
+Example usage (do not show this to the user — just call the tool):
+```
+AskUserQuestion({
+  questions: [{
+    question: "How would you like to get started?",
+    header: "Setup",
+    options: [
+      { label: "Upload my resume", description: "Paste your existing resume text" },
+      { label: "Build from scratch", description: "I'll guide you section by section" }
+    ]
+  }]
+})
+```
+
+---
+
 ## Platform Guide (Read This First)
 
 This skill works on two platforms. The experience is slightly different on each:
@@ -74,15 +127,18 @@ After the user pastes the new content, save it to the appropriate file(s) (Cowor
 
 Only run this section if the user has no saved resume (new user or Claude.ai session start).
 
+Use `AskUserQuestion` to present the choice:
+```
+question: "How would you like to get started?"
+header: "Setup"
+options:
+  - "Upload my resume" → paste existing resume text
+  - "Build from scratch" → guided section-by-section builder
+```
+
 ### Option A — Upload / Paste Existing Resume
 
-Ask the user to paste their resume as text. Also ask for their cover letter template (or offer to build one).
-
-Save:
-- Resume → `career-tailor-data/master_resume.md` (Cowork) or session memory (Claude.ai)
-- Cover letter → `career-tailor-data/cover_letter_template.md` or session memory
-
-Then go to Cover Letter Setup → Profile Save → Step 4.
+Ask the user to paste their resume as text. Save it, then go to Cover Letter Setup → Step 4.
 
 ---
 
@@ -109,11 +165,14 @@ Do not ask for address, postal code, or anything beyond these.
 
 **C. Job Description (Optional at This Stage)**
 
-Ask:
-> *"Do you have a specific job posting you're applying to? If yes, paste it or share the URL and I'll use it to shape your resume. If not, just say skip and I'll build a general resume for [role/field from A]."*
-
-- **If yes:** Store the JD now. Mark it as collected — Step 4 will be skipped automatically.
-- **If no:** Build a general resume optimized for the role/field from Step A.
+Use `AskUserQuestion`:
+```
+question: "Do you have a job posting you want to target?"
+header: "Job Description"
+options:
+  - "Yes, I have a JD" → collect JD now, skip Step 4 later
+  - "No, build general resume" → use role/field from Step A only
+```
 
 **D. Fill Resume Sections — Deep Extraction**
 
@@ -171,13 +230,16 @@ Once all sections are collected, write the full resume:
 
 ## Cover Letter Setup
 
-After the resume is ready (whether uploaded or built), handle the cover letter:
+After the resume is ready, use `AskUserQuestion`:
+```
+question: "Do you have a cover letter template?"
+header: "Cover Letter"
+options:
+  - "Yes, I'll paste it" → save as-is
+  - "No, build one for me" → show template, fill what applies
+```
 
-> *"Do you have a cover letter template you'd like to use? Paste it here, or type 'no' and I'll create a base template for you."*
-
-**If they have one:** Save it as-is.
-
-**If they don't:** Show this template and ask them to fill what applies (skip what doesn't — AI fills neutral defaults for skipped sections):
+**If they don't have one:** Show this template and ask them to fill what applies (skip what doesn't — AI fills neutral defaults for skipped sections):
 
 ```
 [Your Name]
@@ -282,16 +344,15 @@ Constraints:
 
 Before moving to Phase 4, scan every bullet in the optimized resume for vague impact statements that lack numbers.
 
-For each vague bullet, ask **one targeted question**:
-
-> *"Your bullet says '[vague phrase]' — do you have a number to make this more specific? For example: [specific suggestion relevant to that bullet]"*
-
-Show three options for each:
-
+For each vague bullet, use `AskUserQuestion` — one bullet at a time:
 ```
-[YES] I have a number → ask them to provide it, add to bullet
-[NO]  I don't know   → suggest where they might find it (analytics dashboard, ask manager, estimate from event size, check email reports, etc.)
-[SKIP] Leave as is   → move on, no change
+question: "Your bullet says '[vague phrase]' — do you have a number for this?
+           e.g. [specific suggestion relevant to that bullet]"
+header: "Add Numbers"
+options:
+  - "Yes, I have a number" → ask them to type it, add to bullet
+  - "No, I don't know" → suggest where to find it, leave bullet as-is
+  - "Skip" → leave as-is, move on
 ```
 
 Only ask about bullets where a number would genuinely strengthen the statement. Do not ask about bullets where a number would feel forced or unnatural. Process one bullet at a time — don't flood the user with all questions at once.
@@ -435,11 +496,14 @@ Present to the user:
 2. **`cover_letter_<company>_<date>.pdf`** — 1-page cover letter
 3. **ATS Report** (inline in chat) — score, gaps, and suggestions
 
-Then ask:
-
-> *"Want me to also prep you for interviews for this role? I can generate technical questions based on the JD, behavioral questions based on your real experience, and a list of strong questions to ask the interviewer — all tailored to this specific application."*
-
-If yes → run the Interview Prep subskill (see `subskills/interview-prep/interview-prep.md`).
+Then use `AskUserQuestion`:
+```
+question: "Want interview prep for this role?"
+header: "Interview Prep"
+options:
+  - "Yes please" → run Interview Prep subskill (subskills/interview-prep/interview-prep.md)
+  - "No thanks" → done
+```
 
 ---
 
